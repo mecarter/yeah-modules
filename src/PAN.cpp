@@ -30,15 +30,15 @@ struct PAN : Module
   {
     config(0, INPUTS_LEN, OUTPUTS_LEN);
 
-    configInput(L1_INPUT, "Left 1 Input");
-    configInput(L2_INPUT, "Left 2 Input");
-    configInput(L3_INPUT, "Left 3 Input");
-    configInput(R1_INPUT, "Right 1 Input");
-    configInput(R2_INPUT, "Right 2 Input");
-    configInput(R3_INPUT, "Right 3 Input");
+    configInput(L1_INPUT, "Left 1");
+    configInput(L2_INPUT, "Left 2");
+    configInput(L3_INPUT, "Left 3");
+    configInput(R1_INPUT, "Right 1");
+    configInput(R2_INPUT, "Right 2");
+    configInput(R3_INPUT, "Right 3");
 
-    configOutput(L_OUTPUT, "Left Output");
-    configOutput(R_OUTPUT, "Right Output");
+    configOutput(L_OUTPUT, "Left");
+    configOutput(R_OUTPUT, "Right");
   }
 
   void process(const ProcessArgs &args) override
@@ -77,17 +77,24 @@ struct PANWidget : ModuleWidget
   {
     setModule(module);
     setPanel(createPanel(asset::plugin(pluginInstance, "res/PAN.svg")));
-    // 45.5
-    addInput(createInputCentered<CL1362Port>(Vec(21.875, 70.25), module, PAN::L3_INPUT));
-    addInput(createInputCentered<CL1362Port>(Vec(21.875, 115.75), module, PAN::L2_INPUT));
-    addInput(createInputCentered<CL1362Port>(Vec(21.875, 161.25), module, PAN::L1_INPUT));
+    
+    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-    addInput(createInputCentered<CL1362Port>(Vec(21.875, 206.75), module, PAN::R1_INPUT));
-    addInput(createInputCentered<CL1362Port>(Vec(21.875, 252.25), module, PAN::R2_INPUT));
-    addInput(createInputCentered<CL1362Port>(Vec(21.875, 297.75), module, PAN::R3_INPUT));
+    float startingPoint = 37.75f;
+    float endingPoint = 343.25f;
+    float increment = (endingPoint - startingPoint) / 7;
 
-    addOutput(createOutputCentered<CL1362Port>(Vec(21.875, 24.75), module, PAN::L_OUTPUT));
-    addOutput(createOutputCentered<CL1362Port>(Vec(21.875, 343.25), module, PAN::R_OUTPUT));
+    addInput(createInputCentered<CL1362Port>(Vec(21.875, startingPoint + increment), module, PAN::L3_INPUT));
+    addInput(createInputCentered<CL1362Port>(Vec(21.875, startingPoint + (increment * 2)), module, PAN::L2_INPUT));
+    addInput(createInputCentered<CL1362Port>(Vec(21.875, startingPoint + (increment * 3)), module, PAN::L1_INPUT));
+
+    addInput(createInputCentered<CL1362Port>(Vec(21.875, startingPoint + (increment * 4)), module, PAN::R1_INPUT));
+    addInput(createInputCentered<CL1362Port>(Vec(21.875, startingPoint + (increment * 5)), module, PAN::R2_INPUT));
+    addInput(createInputCentered<CL1362Port>(Vec(21.875, startingPoint + (increment * 6)), module, PAN::R3_INPUT));
+
+    addOutput(createOutputCentered<CL1362Port>(Vec(21.875, startingPoint), module, PAN::L_OUTPUT));
+    addOutput(createOutputCentered<CL1362Port>(Vec(21.875, endingPoint), module, PAN::R_OUTPUT));
   }
 };
 

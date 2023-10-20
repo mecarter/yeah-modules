@@ -24,6 +24,12 @@
       "name": "PAN",
       "description": "Simple Stereo Panning Mixer",
       "tags": []
+    },
+    {
+      "slug": "SEQ",
+      "name": "SEQ",
+      "description": "4 independently advanceable sequencers",
+      "tags": []
     }
   ]
 }
