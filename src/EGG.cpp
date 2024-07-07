@@ -77,9 +77,11 @@ struct EGG : Module
 		float relEndTime;
 		float attAlgorithm;
 		float relAlgorithm;
+		bool isAtEoa;
+		bool isFinished;
 	};
 
-	list<Env> envs;
+	vector<Env> envs;
 
 	Env createEnv(
 			float startTime,
@@ -94,13 +96,15 @@ struct EGG : Module
 		newEnv.relEndTime = relEndTime;
 		newEnv.attAlgorithm = attAlgorithm;
 		newEnv.relAlgorithm = relAlgorithm;
+		newEnv.isAtEoa = false;
+		newEnv.isFinished = false;
 		return newEnv;
 	}
 
 	float currentVoltage = 0.f;
 	float eoaTimer = 0.f;
 	float eocTimer = 0.f;
-	bool wasTriggered = false;
+	bool isLooping = false;
 	bool mightBeGate = false;
 
 	float calculateAttPosition(
@@ -158,6 +162,7 @@ struct EGG : Module
 		float attCvInput = inputs[ATT_CV_INPUT].getVoltage();
 		float attAlgorithm = params[ATT_SLOPE_PARAM].getValue();
 		float relTimeParam = params[REL_TIME_PARAM].getValue();
+		float isLoopingParam = params[IS_LOOPING_PARAM].getValue();
 		float relCvInput = inputs[REL_CV_INPUT].getVoltage();
 		float relAlgorithm = params[REL_SLOPE_PARAM].getValue();
 		float currentTime = args.frame * args.sampleTime;
@@ -165,11 +170,34 @@ struct EGG : Module
 		float attTime = clamp(attTimeParam + (attCvInput / 10.f), 0.f, 1.f);
 		float relTime = clamp(relTimeParam + (relCvInput / 10.f), 0.f, 1.f);
 
+		// Start looping?
+		if (!isLooping && isLoopingParam == 1)
+		{
+			isLooping = true;
+
+			if (envs.size() == 0)
+			{
+				// startTime, attEndTime, relEndTime, algorithm
+				envs.push_back(
+						createEnv(
+								currentTime,
+								currentTime + attTime,
+								currentTime + attTime + relTime,
+								attAlgorithm,
+								relAlgorithm));
+			}
+		}
+
+		// Quit looping?
+		if (isLooping && isLoopingParam == 0)
+		{
+			isLooping = false;
+		}
+
 		// Triggered!
 		if (!mightBeGate && trigInput >= 5.f)
 		{
 			mightBeGate = true;
-			wasTriggered = true;
 
 			// startTime, attEndTime, relEndTime, algorithm
 			envs.push_back(
@@ -187,17 +215,22 @@ struct EGG : Module
 			mightBeGate = false;
 		}
 
+		// Garbage collection: remove spent Envs
+		envs.erase(std::remove_if(envs.begin(), envs.end(), [](const Env &env)
+															{ return env.isFinished; }),
+							 envs.end());
+
 		// Loop over each env in the queue
-		for (list<Env>::iterator env = envs.begin(); env != envs.end(); env++)
+		for (auto &env : envs)
 		{
 			// Attack Cycle
-			if (currentTime < env->attEndTime)
+			if (currentTime < env.attEndTime)
 			{
 				float newCurrentVoltage = calculateAttPosition(
 						currentTime,
-						env->startTime,
-						env->attEndTime,
-						env->attAlgorithm);
+						env.startTime,
+						env.attEndTime,
+						env.attAlgorithm);
 
 				// Allow previous env to play out
 				if (newCurrentVoltage < currentVoltage - newCurrentVoltage)
@@ -210,34 +243,43 @@ struct EGG : Module
 				}
 			}
 
-			// Start Release Cycle
-			if (currentTime == env->attEndTime)
+			if (!env.isAtEoa && currentTime >= env.attEndTime)
 			{
-				outputs[EOA_OUTPUT].setVoltage(10.f);
-				currentVoltage = calculateRelPosition(
-						currentTime,
-						env->attEndTime,
-						env->relEndTime,
-						env->relAlgorithm);
+				env.isAtEoa = true;
+				eoaTimer = 0.01f;
 			}
 
 			// Release Cycle
-			if (currentTime > env->attEndTime && currentTime < env->relEndTime)
+			if (currentTime > env.attEndTime && currentTime < env.relEndTime)
 			{
 				currentVoltage = calculateRelPosition(
 						currentTime,
-						env->attEndTime,
-						env->relEndTime,
-						env->relAlgorithm);
+						env.attEndTime,
+						env.relEndTime,
+						env.relAlgorithm);
 			}
 
-			if (currentTime > env->relEndTime)
+			if (currentTime > env.relEndTime)
 			{
-				eocTimer = 1.f;
+				env.isFinished = true;
+				eocTimer = 0.01f;
+
+				if (isLooping && &env == &envs.back())
+				{
+					// startTime, attEndTime, relEndTime, algorithm
+					envs.push_back(
+							createEnv(
+									currentTime,
+									currentTime + attTime,
+									currentTime + attTime + relTime,
+									attAlgorithm,
+									relAlgorithm));
+				}
 			}
 		}
 
-		outputs[OUT_OUTPUT].setVoltage(currentVoltage);
+		outputs[OUT_OUTPUT]
+				.setVoltage(currentVoltage);
 		lights[STATUS_LIGHT].setBrightness(currentVoltage / 10.f);
 
 		if (eoaTimer > 0.f)
