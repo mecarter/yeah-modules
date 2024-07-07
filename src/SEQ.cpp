@@ -825,7 +825,7 @@ struct SEQWidget : ModuleWidget
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 8), seq1Y + seqLightOffsetY), module, SEQ::SEQ_1_08_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 9), seq1Y + seqLightOffsetY), module, SEQ::SEQ_1_09_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 10), seq1Y + seqLightOffsetY), module, SEQ::SEQ_1_10_LIGHT));
-    
+
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq1Y + seqLightOffsetY), module, SEQ::SEQ_1_OUTPUT_LIGHT));
 
     addOutput(createOutputCentered<CL1362Port>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq1Y), module, SEQ::SEQ_1_OUTPUT));
@@ -833,7 +833,7 @@ struct SEQWidget : ModuleWidget
     //
     // SEQUENCER 2
     //
-    float seq2Y = 150.f;
+    float seq2Y = 141.f;
 
     addInput(createInputCentered<CL1362Port>(Vec(seqTrigX, seq2Y), module, SEQ::SEQ_2_TRIG));
 
@@ -852,7 +852,7 @@ struct SEQWidget : ModuleWidget
     addParam(createParamCentered<Davies1900hBlackKnob>(Vec(seqStartX + (seqSpacing * 9), seq2Y), module, SEQ::SEQ_2_09));
     addParam(createParamCentered<Davies1900hBlackKnob>(Vec(seqStartX + (seqSpacing * 10), seq2Y), module, SEQ::SEQ_2_10));
 
-        addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqTrigX, seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_TRIG_LIGHT));
+    addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqTrigX, seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_TRIG_LIGHT));
 
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + seqSpacing, seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_01_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 2), seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_02_LIGHT));
@@ -864,7 +864,7 @@ struct SEQWidget : ModuleWidget
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 8), seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_08_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 9), seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_09_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 10), seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_10_LIGHT));
-    
+
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq2Y + seqLightOffsetY), module, SEQ::SEQ_2_OUTPUT_LIGHT));
 
     addOutput(createOutputCentered<CL1362Port>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq2Y), module, SEQ::SEQ_2_OUTPUT));
@@ -872,7 +872,7 @@ struct SEQWidget : ModuleWidget
     //
     // SEQUENCER 3
     //
-    float seq3Y = 234.f;
+    float seq3Y = 216.f;
 
     addInput(createInputCentered<CL1362Port>(Vec(seqTrigX, seq3Y), module, SEQ::SEQ_3_TRIG));
 
@@ -891,7 +891,7 @@ struct SEQWidget : ModuleWidget
     addParam(createParamCentered<Davies1900hBlackKnob>(Vec(seqStartX + (seqSpacing * 9), seq3Y), module, SEQ::SEQ_3_09));
     addParam(createParamCentered<Davies1900hBlackKnob>(Vec(seqStartX + (seqSpacing * 10), seq3Y), module, SEQ::SEQ_3_10));
 
-        addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqTrigX, seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_TRIG_LIGHT));
+    addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqTrigX, seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_TRIG_LIGHT));
 
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + seqSpacing, seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_01_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 2), seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_02_LIGHT));
@@ -903,7 +903,7 @@ struct SEQWidget : ModuleWidget
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 8), seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_08_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 9), seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_09_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 10), seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_10_LIGHT));
-    
+
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq3Y + seqLightOffsetY), module, SEQ::SEQ_3_OUTPUT_LIGHT));
 
     addOutput(createOutputCentered<CL1362Port>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq3Y), module, SEQ::SEQ_3_OUTPUT));
@@ -911,7 +911,7 @@ struct SEQWidget : ModuleWidget
     //
     // SEQUENCER 4
     //
-    float seq4Y = 318.f;
+    float seq4Y = 291.f;
 
     addInput(createInputCentered<CL1362Port>(Vec(seqTrigX, seq4Y), module, SEQ::SEQ_4_TRIG));
 
@@ -930,7 +930,7 @@ struct SEQWidget : ModuleWidget
     addParam(createParamCentered<Davies1900hBlackKnob>(Vec(seqStartX + (seqSpacing * 9), seq4Y), module, SEQ::SEQ_4_09));
     addParam(createParamCentered<Davies1900hBlackKnob>(Vec(seqStartX + (seqSpacing * 10), seq4Y), module, SEQ::SEQ_4_10));
 
-        addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqTrigX, seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_TRIG_LIGHT));
+    addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqTrigX, seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_TRIG_LIGHT));
 
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + seqSpacing, seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_01_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 2), seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_02_LIGHT));
@@ -942,7 +942,7 @@ struct SEQWidget : ModuleWidget
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 8), seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_08_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 9), seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_09_LIGHT));
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 10), seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_10_LIGHT));
-    
+
     addChild(createLightCentered<MediumLight<GreenLight>>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq4Y + seqLightOffsetY), module, SEQ::SEQ_4_OUTPUT_LIGHT));
 
     addOutput(createOutputCentered<CL1362Port>(Vec(seqStartX + (seqSpacing * 11) - 2.5, seq4Y), module, SEQ::SEQ_4_OUTPUT));

@@ -15,20 +15,20 @@
   "modules": [
     {
       "slug": "EGG",
-      "name": "EGG",
+      "name": "Egg",
       "description": "Envelope GGenerator",
       "tags": []
     },
     {
       "slug": "PAN",
-      "name": "PAN",
+      "name": "Panastereo",
       "description": "Simple Stereo Panning Mixer",
       "tags": []
     },
     {
       "slug": "SEQ",
-      "name": "SEQ",
-      "description": "4 independently advanceable sequencers",
+      "name": "The Seeqer",
+      "description": "4 independently advanceable 10-step sequencers",
       "tags": []
     }
   ]
